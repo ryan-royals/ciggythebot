@@ -1,0 +1,18 @@
+{
+  "name": "ciggythebot",
+  "version": "0.0.0",
+  "description": "Shit little discord bot for posting TCG P1p1 images on a schedule",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.15.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.2.0"
+  }
+}
