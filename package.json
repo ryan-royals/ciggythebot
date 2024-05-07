@@ -4,7 +4,8 @@
   "description": "Shit little discord bot for posting TCG P1p1 images on a schedule",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "deploy-commands": "node deploy-commands.js"
   },
   "author": "",
   "license": "MIT",
