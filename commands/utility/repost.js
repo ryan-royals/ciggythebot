@@ -13,10 +13,47 @@ module.exports = {
     };
 
     const sourceChannel = interaction.guild.channels.cache.get(channel.source);
-    const destinationChannel = interaction.guild.channels.cache.get(channel.destination);
-
+    const destinationChannel = interaction.guild.channels.cache.get(
+      channel.destination
+    );
     const messages = await sourceChannel.messages.fetch();
-    console.log(messages)
-    
+    const imageMessages = messages.filter((message) =>
+      message.attachments.some((attachment) =>
+        attachment.contentType.startsWith("image/")
+      )
+    );
+
+    // Filter out messages that have a certain reaction
+    const unusedImageMessages = imageMessages.filter(
+      (message) => !message.reactions.cache.has("🔄")
+    );
+
+    // Select a random message
+    const randomMessage = unusedImageMessages.random();
+
+    if (!randomMessage) {
+      console.log("No unused images found");
+      return;
+    }
+
+    const now = new Date();
+    const threadName = `${now.getDate().toString().padStart(2, "0")}${(
+      now.getMonth() + 1
+    )
+      .toString()
+      .padStart(2, "0")}`;
+
+    const thread = await destinationChannel.threads.create({
+      name: threadName,
+      autoArchiveDuration: 60,
+      reason: "New image thread",
+    });
+
+    await thread.send({
+      files: randomMessage.attachments.map((attachment) => attachment.url),
+    });
+
+    // React to the selected message
+    await randomMessage.react("🔄");
   },
 };
